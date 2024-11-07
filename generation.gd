@@ -15,67 +15,64 @@ func _ready():
 
 func generate_board():
 	fill_board()
-	while !has_equal_ammount():
-		fill_board()
 
-func is_valid():
-	var first
-	var second
-	for y in size:
-		for x in size: 
-			var current_tile = board_tiles[x*y]
-			if x == 0:
-				first = current_tile
-				continue
-			if x == 1:
-				second = current_tile
-				continue
-			if current_tile.state == first.state && current_tile.state == second.state:
-				return false
-			first = board_tiles[(x-2)*y]
-			second = board_tiles[(x-1)*y]
-	return true
-
-func has_equal_ammount():
+func has_equal_amount():
 	blacks = board_tiles.filter(func(tile): return tile.state == Tile.STATE.BLACK).size()
 	whites = board_tiles.filter(func(tile): return tile.state == Tile.STATE.WHITE).size()
 	return blacks == whites
 
 func fill_board():
-	var first
-	var second
-	var refill = true
 	for i in size*size:
 		board_tiles.append(Tile.new())
-	while refill:
-		refill = false
-		for y in size:
-			for x in size:
-				var current_tile = board_tiles[x*y]
-				current_tile.state = randi_range(1, 2)
-				if x == 0:
-					first = current_tile
-					continue
-				if x == 1:
-					second = current_tile
-					continue
-				if current_tile.state == first.state && current_tile.state == second.state:
-					refill = true
-					break
-				first = board_tiles[(x-2)*y]
-				second = board_tiles[(x-1)*y]
-			if refill:
-				break
+	var coord = Vector2i((size/2)-1, (size/2)-1)
+	var x_delta = 0
+	var y_delta = 0
+	var x_target
+	var y_target
+	board_tiles[coord.y * size + coord.x].state = Tile.STATE.BLACK
+	print_board()
+	for i in (size/2):
+		x_delta += 1
+		y_delta += 1
+		x_target = clamp(coord.x + x_delta, 0, size-1)
+		y_target = clamp(coord.y + y_delta, 0, size-1)
+		while (coord.x < x_target):
+			coord.x += 1
+			board_tiles[coord.y * size + coord.x].state = Tile.STATE.BLACK
+
+		while (coord.y < y_target):
+			coord.y += 1
+			board_tiles[coord.y * size + coord.x].state = Tile.STATE.WHITE
+		print_board()
+		
+		x_delta += 1
+		y_delta += 1
+		x_target = clamp(coord.x - x_delta, 0, size - 1)
+		y_target = clamp(coord.y - y_delta, 0, size - 1)
+			
+		while (coord.x > x_target):
+			coord.x -= 1
+			board_tiles[coord.y * size + coord.x].state = Tile.STATE.BLACK
+		if (x_delta >= size):
+			break;
+		while (coord.y > y_target):
+			coord.y -= 1
+			board_tiles[coord.y * size + coord.x].state = Tile.STATE.WHITE
+		
+		print_board()
 
 func print_board():
 	var string = ""
 	for y in size:
 		for x in size:
-			if board_tiles[x*y].state == Tile.STATE.BLACK:
+			if board_tiles[y * size + x].state == Tile.STATE.BLACK:
 				string += "X"
-			elif board_tiles[x*y].state == Tile.STATE.WHITE:
+			elif board_tiles[y * size + x].state == Tile.STATE.WHITE:
 				string += "O"
 			else:
 				string += "°"
 		print(string)
 		string = ""
+	for i in size:
+		string += "-"
+	print(string)

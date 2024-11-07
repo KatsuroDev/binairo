@@ -4,4 +4,4 @@
 
 [node name="Node" type="Node"]
 script = ExtResource("1_jmsv5")
-size = 4
+size = 6
