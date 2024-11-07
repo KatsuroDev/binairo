@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://cickiosn7j24e"]
+
+[ext_resource type="Script" path="res://generation.gd" id="1_jmsv5"]
+
+[node name="Node" type="Node"]
+script = ExtResource("1_jmsv5")
+size = 4
