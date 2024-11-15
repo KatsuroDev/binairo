@@ -1,0 +1,35 @@
+[gd_scene load_steps=2 format=3 uid="uid://dxp5sc8df1l4s"]
+
+[ext_resource type="Script" path="res://tile_ui.gd" id="1_tokff"]
+
+[node name="Tile" type="PanelContainer"]
+custom_minimum_size = Vector2(100, 100)
+offset_right = 100.0
+offset_bottom = 100.0
+script = ExtResource("1_tokff")
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer2"]
+layout_mode = 2
+
+[node name="White" type="Label" parent="VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+text = "White Valid"
+
+[node name="Black" type="Label" parent="VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+text = "Black Valid"
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer2/MarginContainer"]
+layout_mode = 2
+color = Color(1, 0.12549, 1, 1)
